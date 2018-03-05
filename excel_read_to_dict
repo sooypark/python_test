@@ -1,0 +1,34 @@
+#excel 문서를 pandas를 통해 dataframe으로 읽어오기
+import pandas as pd
+import pprintimport glob
+#file path를 읽어서 한꺼번에 file path를 file list를 만든다
+#file list를 하나씩 읽어오면서 dataframe에 담는다
+#data frame의 concat을 사용하여 한꺼번에 데이터 frame에 담는다path = ""allfiles = glob.glob(path + "\\*.xlsx")
+frame = pd.DataFrame()
+filelist = []
+#file을 읽을때 index column을 넣지 않으려면 None으로 설정한다
+for file_ in allfiles:    
+  data = pd.read_excel(file_, index_col=None)    
+  filelist.append(data)
+frame = pd.concat(filelist)
+# rownum을 구하기 위해서는 len(frame)을 사용하고, column의 길이를 구하기 위해서는 len(frame.columns)를 사용한다
+sentences_capacity = ""
+# 특정 df에서 특정값을 가져올때
+failure_mode = set(frame["고장"])
+# nan을 없애기 위해서 filter와 lamda 함수를 사용함
+failure_mode = set(filter(lambda x: x == x , failure_mode))
+# set을 list로 바꿈
+keys = list(failure_mode)
+values = []
+for reason in keys:    
+  sentences = ""    
+  #df의 열에서 특정값을 가진 frame을 만들고 이를 dataframe으로 다시변경하기    
+  fail_reasons = frame[frame["고장"] == reason]    
+  fail_reasons_df = pd.DataFrame(fail_reasons)
+    for inx in range(1, len(fail_reasons_df)):        
+      for jnx in range(1, len(fail_reasons_df.columns)):            
+        if str(fail_reasons_df.iloc[inx,jnx]) != "nan":                
+          sentences += "." + str(fail_reasons_df.iloc[inx,jnx])    
+values.append(sentences)
+doc_dict = dict(zip(keys,values))
+pprint.pprint(doc_dict)
