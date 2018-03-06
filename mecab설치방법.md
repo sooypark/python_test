@@ -10,6 +10,11 @@ pip install <다운로드한 whl 파일> 로 설치할 수 있습니다. venv를
 
 설치하면 C:\ProgramData\Anaconda3\Lib\site-packages\mecab_python-0.996_ko_0.9.2_msvc.dist-info 로 들어감
 
+C:\ProgramData\Anaconda3\Lib\site-packages\konlpy\tag  _mecab.py 
+# def __init__(self, dicpath='/usr/local/lib/mecab/dic/mecab-ko-dic'):
+    def __init__(self, dicpath='C:\\mecab\\mecab-ko-dic'): 
+
+
 하기의 코드로 test해보고 제대로 설치되었는지 확인
 
 #!/usr/bin/python
