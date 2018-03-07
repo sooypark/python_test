@@ -5,6 +5,7 @@ import glob
 import nltk
 import MeCab
 from konlpy.tag import Mecab
+from nltk.probability import FreqDist
 
 import gensim
 from nltk.tokenize import word_tokenize
@@ -91,9 +92,26 @@ for sentence in doc_dict.values():
 #명사값으로 구성된 dictionary 생성
 noun_dict = dict(zip(keys, noun_values))
 
-# ko = nltk.Text(tokens_thickness_fail)
-# ko.vocab()
-# plt.figure(figsize=(12, 4))
+### word bar chart
+print(noun_dict.keys())
+
+for key in noun_dict.keys():
+    ko = nltk.Text(noun_dict[key].split())
+    freq = FreqDist(noun_dict[key].split())
+    x_axes = []
+    y_axes = []
+    for inx in range(20):
+        top_50 = freq.most_common(20)
+        x_axes.append(top_50[inx][0])
+        y_axes.append(top_50[inx][1])
+    print(type(ko))
+    ko.vocab()
+    print(x_axes)
+    print(y_axes)
+    plt.figure(figsize=(12, 4))
+    plt.bar(x_axes, y_axes)
+    plt.title(key)
+    plt.show()
 # ko.plot(50)
 
 # print(noun_dict.items())
@@ -106,6 +124,7 @@ gen_docs = [[w.lower() for w in word_tokenize(text)]
 # print(gen_docs)
 dictionary = gensim.corpora.Dictionary(gen_docs)
 # print(dictionary[5])
+# print(dictionary.token2id['바인더'])
 # print("Number of words in dictionary:",len(dictionary))
 # for i in range(len(dictionary)):
 #     print(i, dictionary[i])
@@ -141,7 +160,7 @@ print(query_doc_tf_idf)
 number_cnt = 1
 for key in noun_dict.keys():
     print("number:%d %s %s" %(number_cnt, key, noun_dict.keys()))
-    query_doc = [w for w in word_tokenize(noun_dict[key])]
+    query_doc = [w for w in noun_dict[key].split()]
     # print(query_doc)
     query_doc_bow = dictionary.doc2bow(query_doc)
     # print(query_doc_bow)
