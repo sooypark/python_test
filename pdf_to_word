@@ -1,0 +1,14 @@
+If you have LibreOffice installed
+
+lowriter --invisible --convert-to doc '/your/file.pdf'
+If you want to use Python for this:
+
+import os
+import subprocess
+
+for top, dirs, files in os.walk('/my/pdf/folder'):
+    for filename in files:
+        if filename.endswith('.pdf'):
+            abspath = os.path.join(top, filename)
+            subprocess.call('lowriter --invisible --convert-to doc "{}"'
+                            .format(abspath), shell=True)
