@@ -2,6 +2,7 @@ windows mecab 설치하기 위해서
 
 https://github.com/Pusnow/mecab-python-msvc
 에서 하는 대로 설치
+https://github.com/Pusnow/mecab-ko-msvc/releases/tag/release-0.9.2-msvc-3 여기도 
 
 [c:\mecab] mecab-ko-msvc를 설치하지 않았으면 설치해야 합니다.
 [c:\mecab에 설치하며 약 70mega짜리임] mecab-ko-dic-msvc를 설치하지 않았으면 설치해야 합니다.
